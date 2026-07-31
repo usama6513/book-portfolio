@@ -221,6 +221,26 @@ p,li { font-size:11px; line-height:1.75; color:#1a3a6a; }
   .book-wrapper { width:820px; height:580px; transform:scale(0.6); perspective:1800px; }
   .book-wrapper.cover-only { transform:translateX(-25%) scale(0.6); }
   .book { transform:rotateX(2deg) rotateY(-3deg); }
+  .content p,.content li { font-size:19px; }
+  .content h2 { font-size:34px; }
+  .content h3 { font-size:24px; }
+  .section-tag { font-size:13px; }
+  .proj h4 { font-size:22px; }
+  .proj p { font-size:17px; }
+  .skill-card { margin-bottom:8px; }
+  .skill-card h4 { font-size:19px; }
+  .skill-card p { font-size:16px; }
+  .skill-tags .tag-pill { font-size:13px; }
+  .tl-item { margin-bottom:14px; padding-left:16px; }
+  .tl-item::before { left:-16px; }
+  .tl-year { font-size:15px; }
+  .tl-title { font-size:20px; }
+  .tl-desc { font-size:17px; }
+  .stat-num { font-size:42px; }
+  .handwritten { font-size:26px; }
+  .script { font-size:30px; }
+  .serif-quote { font-size:20px; }
+  .sticky { font-size:24px; }
   .nav-btn-fixed { width:36px; height:36px; }
   .nav-btn-fixed.prev { left:6px; }
   .nav-btn-fixed.next { right:6px; }
@@ -234,6 +254,26 @@ p,li { font-size:11px; line-height:1.75; color:#1a3a6a; }
   .book-wrapper.cover-only { transform:translateX(-25%) scale(0.42); }
   .book { transform:rotateX(1deg) rotateY(0deg); }
   .book:hover { transform:rotateX(1deg) rotateY(0deg); }
+  .content p,.content li { font-size:26px; }
+  .content h2 { font-size:46px; }
+  .content h3 { font-size:32px; }
+  .section-tag { font-size:17px; }
+  .proj h4 { font-size:30px; }
+  .proj p { font-size:23px; }
+  .skill-card h4 { font-size:26px; }
+  .skill-card p { font-size:22px; }
+  .skill-tags .tag-pill { font-size:17px; }
+  .tl-year { font-size:20px; }
+  .tl-title { font-size:27px; }
+  .tl-desc { font-size:23px; }
+  .stat-num { font-size:56px; }
+  .stat-lbl { font-size:13px; }
+  .handwritten { font-size:34px; }
+  .script { font-size:40px; }
+  .serif-quote { font-size:26px; }
+  .sticky { font-size:30px; }
+  .c-name { font-size:18px; }
+  .c-handle { font-size:15px; }
   .nav-btn-fixed { width:32px; height:32px; }
   .nav-btn-fixed.prev { left:4px; }
   .nav-btn-fixed.next { right:4px; }
@@ -295,16 +335,16 @@ p,li { font-size:11px; line-height:1.75; color:#1a3a6a; }
       <h2>Table of Contents</h2>
       <div class="sep"></div>
       <ul class="toc-list">
-        <li onclick="goTo(0);event.stopPropagation();"><span class="toc-num">01</span><span class="toc-title">Cover Page</span><span class="toc-pg">i</span></li>
-        <li onclick="goTo(1);event.stopPropagation();"><span class="toc-num">02</span><span class="toc-title">About Me</span><span class="toc-pg">1</span></li>
-        <li onclick="goTo(2);event.stopPropagation();"><span class="toc-num">03</span><span class="toc-title">Skills & Expertise</span><span class="toc-pg">2</span></li>
-        <li onclick="goTo(3);event.stopPropagation();"><span class="toc-num">04</span><span class="toc-title">Skills & Expertise (cont.)</span><span class="toc-pg">3</span></li>
-        <li onclick="goTo(4);event.stopPropagation();"><span class="toc-num">05</span><span class="toc-title">Featured Projects</span><span class="toc-pg">4</span></li>
-        <li onclick="goTo(5);event.stopPropagation();"><span class="toc-num">06</span><span class="toc-title">Featured Projects (cont.)</span><span class="toc-pg">5</span></li>
-        <li onclick="goTo(6);event.stopPropagation();"><span class="toc-num">07</span><span class="toc-title">More Projects</span><span class="toc-pg">6</span></li>
-        <li onclick="goTo(7);event.stopPropagation();"><span class="toc-num">08</span><span class="toc-title">My Journey</span><span class="toc-pg">7</span></li>
-        <li onclick="goTo(8);event.stopPropagation();"><span class="toc-num">09</span><span class="toc-title">Education & Goals</span><span class="toc-pg">8</span></li>
-        <li onclick="goTo(9);event.stopPropagation();"><span class="toc-num">10</span><span class="toc-title">Contact & Connect</span><span class="toc-pg">9</span></li>
+        <li onclick="tocTo('PORTFOLIO');event.stopPropagation();"><span class="toc-num">01</span><span class="toc-title">Cover Page</span><span class="toc-pg">i</span></li>
+        <li onclick="tocTo('About Me');event.stopPropagation();"><span class="toc-num">02</span><span class="toc-title">About Me</span><span class="toc-pg">1</span></li>
+        <li onclick="tocTo('Skills & Expertise');event.stopPropagation();"><span class="toc-num">03</span><span class="toc-title">Skills & Expertise</span><span class="toc-pg">2</span></li>
+        <li onclick="tocTo('More Expertise');event.stopPropagation();"><span class="toc-num">04</span><span class="toc-title">Skills & Expertise (cont.)</span><span class="toc-pg">3</span></li>
+        <li onclick="tocTo('Featured Projects');event.stopPropagation();"><span class="toc-num">05</span><span class="toc-title">Featured Projects</span><span class="toc-pg">4</span></li>
+        <li onclick="tocTo('Featured Projects (cont.)');event.stopPropagation();"><span class="toc-num">06</span><span class="toc-title">Featured Projects (cont.)</span><span class="toc-pg">5</span></li>
+        <li onclick="tocTo('More Projects');event.stopPropagation();"><span class="toc-num">07</span><span class="toc-title">More Projects</span><span class="toc-pg">6</span></li>
+        <li onclick="tocTo('My Journey');event.stopPropagation();"><span class="toc-num">08</span><span class="toc-title">My Journey</span><span class="toc-pg">7</span></li>
+        <li onclick="tocTo('Education & Goals');event.stopPropagation();"><span class="toc-num">09</span><span class="toc-title">Education & Goals</span><span class="toc-pg">8</span></li>
+        <li onclick="tocTo('Contact & Connect');event.stopPropagation();"><span class="toc-num">10</span><span class="toc-title">Contact & Connect</span><span class="toc-pg">9</span></li>
       </ul>
     </div>
     <div class="page-num">ii</div><div class="curl"></div>
@@ -635,8 +675,136 @@ p,li { font-size:11px; line-height:1.75; color:#1a3a6a; }
 </div>
 
 <script>
-const TOTAL=8; let cur=1;
-const labels=['Cover','1/9','2/9','3/9','4/9','5/9','6/9','7/9','8/9'];
+let TOTAL=8; let cur=1;
+let labels=['Cover','1/9','2/9','3/9','4/9','5/9','6/9','7/9','8/9'];
+
+function buildLabels(){
+  labels=['Cover'];
+  for(let i=2;i<=TOTAL;i++){ labels.push((i-1)+'/'+TOTAL); }
+}
+
+function tocTo(title){
+  var sheets=document.querySelectorAll('#book .page');
+  for(var i=0;i<sheets.length;i++){
+    var f=sheets[i].querySelector('.face-front,.cover-face');
+    var b=sheets[i].querySelector('.face-back');
+    if(f&&(f.textContent||'').indexOf(title)!==-1){ goTo(i+1); return; }
+    if(b&&(b.textContent||'').indexOf(title)!==-1){ goTo(i+2); return; }
+  }
+}
+
+var __paginated=false;
+
+function overflows(el){
+  var kids=el.children;
+  var saved=[];
+  for(var i=0;i<kids.length;i++){
+    saved.push([kids[i],kids[i].style.cssText]);
+    kids[i].style.flex='none';
+    kids[i].style.height='auto';
+  }
+  var res=el.scrollHeight>el.clientHeight+4;
+  for(var j=0;j<saved.length;j++){
+    saved[j][0].style.cssText=saved[j][1];
+  }
+  return res;
+}
+
+function flattenContent(content){
+  ['skill-grid','tl'].forEach(function(sel){
+    var conts=content.querySelectorAll(sel);
+    for(var i=0;i<conts.length;i++){
+      var c=conts[i];
+      while(c.firstChild){
+        var el=c.firstChild;
+        c.parentNode.insertBefore(el,c);
+      }
+      c.parentNode.removeChild(c);
+    }
+  });
+}
+
+function makeSheet(){
+  var d=document.createElement('div');
+  d.className='page z-front';
+  d.innerHTML='<div class="face face-front"><div class="content"></div><div class="page-num"></div><div class="curl"></div></div>'+
+              '<div class="face face-back"><div class="content"></div><div class="page-num"></div><div class="curl"></div></div>'+
+              '<div class="page-edges"></div>';
+  return d;
+}
+
+function splitContent(src,dst){
+  var count=0;
+  while(overflows(src) && src.children.length>1 && count<50){
+    count++;
+    var last=src.lastElementChild;
+    if(!last) break;
+    src.removeChild(last);
+    dst.insertBefore(last,dst.firstChild);
+  }
+}
+
+function renumber(){
+  var book=document.getElementById('book');
+  var pages=book.querySelectorAll('.page');
+  TOTAL=pages.length;
+  buildLabels();
+  var n=0;
+  for(var i=0;i<TOTAL;i++){
+    pages[i].id='p'+(i+1);
+    pages[i].style.setProperty('--pi',i+1);
+    var fns=pages[i].querySelector('.face-front .page-num');
+    var bns=pages[i].querySelector('.face-back .page-num');
+    if(fns){ if(n===0){fns.textContent='ii';}else{fns.textContent=n;} n++; }
+    if(bns){ bns.textContent=n; n++; }
+  }
+  if(cur>TOTAL) cur=1;
+  render();
+}
+
+function paginate(){
+  if(__paginated) return;
+  __paginated=true;
+  if(window.innerWidth>700){ renumber(); return; }
+  var book=document.getElementById('book');
+  var pass=0;
+  while(pass<40){
+    pass++;
+    var changed=false;
+    var sheets=Array.prototype.slice.call(book.querySelectorAll('.page'));
+    for(var s=0;s<sheets.length;s++){
+      var sheet=sheets[s];
+      var front=sheet.querySelector('.face-front');
+      var back=sheet.querySelector('.face-back');
+      if(!front||!back) continue;
+      var fc=front.querySelector('.content');
+      var bc=back.querySelector('.content');
+      if(fc) flattenContent(fc);
+      if(bc) flattenContent(bc);
+      var ns=null;
+      if(fc&&overflows(fc)){
+        ns=makeSheet();
+        book.insertBefore(ns,sheet.nextSibling);
+        splitContent(fc,ns.querySelector('.face-front .content'));
+        s++;
+        changed=true;
+      }
+      if(bc&&overflows(bc)){
+        if(ns){
+          splitContent(bc,ns.querySelector('.face-back .content'));
+        }else{
+          var ns2=makeSheet();
+          book.insertBefore(ns2,sheet.nextSibling);
+          splitContent(bc,ns2.querySelector('.face-front .content'));
+          s++;
+        }
+        changed=true;
+      }
+    }
+    if(!changed) break;
+  }
+  renumber();
+}
 
 function render(){
   document.getElementById('prevBtn').disabled=cur<=1;
@@ -703,16 +871,26 @@ function goTo(n){
 // No page click - only arrow buttons navigate
 
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}if(e.key==='ArrowLeft'){e.preventDefault();prev();}});
+
+function init(){
+  paginate();
+  render();
+}
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(init).catch(init);
+}else{
+  window.addEventListener('load',init);
+}
 render();
 
-// Direct click handlers on ALL links — bypasses 3D transform click issues
-document.querySelectorAll('a').forEach(function(a){
-  a.addEventListener('click',function(e){
+// Delegated click handler for ALL links (new pages created by pagination included)
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a'):null;
+  if(a&&a.href){
     e.preventDefault();
     e.stopPropagation();
-    var url=a.getAttribute('href');
-    if(url) window.open(url,'_blank');
-  });
+    window.open(a.getAttribute('href'),'_blank');
+  }
 });
 </script>
 </body>
