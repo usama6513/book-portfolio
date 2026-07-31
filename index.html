@@ -209,43 +209,18 @@ p,li { font-size:11px; line-height:1.75; color:#1a3a6a; }
 
 /* ========== RESPONSIVE ========== */
 @media (max-width:900px) {
-  .book-wrapper { width:94vw; height:67vw; }
-  .content { padding:28px 30px 34px 40px; }
-  .cover-title { font-size:36px; }
-  .h2 { font-size:20px; }
+  .book-wrapper { width:820px; height:580px; transform:scale(0.78); }
+  .book-wrapper.cover-only { transform:translateX(-25%) scale(0.78); }
   .nav-btn-fixed { width:40px; height:40px; }
   .nav-btn-fixed.prev { left:12px; }
   .nav-btn-fixed.next { right:12px; }
 }
 
 @media (max-width:700px) {
-  body { align-items:center; justify-content:center; padding-top:0; }
-  .book-wrapper { width:92vw; height:62vw; }
-  .book-wrapper.cover-only { transform:translateX(-25%); }
-  .book { transform:rotateX(1deg) rotateY(0deg); }
-  .content { padding:22px 20px 28px 30px; }
-  .cover-title { font-size:28px; letter-spacing:2px; }
-  .cover-name-sub { font-size:16px; }
-  .cover-role { font-size:8px; letter-spacing:4px; margin-bottom:10px; }
-  .cover-tagline { font-size:11px; }
-  .profile-frame { width:90px; height:90px; }
-  h2 { font-size:18px; margin-bottom:8px; }
-  h3 { font-size:12px; }
-  p,li { font-size:10px; line-height:1.7; }
-  .stat-num { font-size:22px; }
-  .skill-grid { gap:6px; }
-  .skill-card { padding:8px; }
-  .skill-card h4 { font-size:10.5px; }
-  .skill-card p { font-size:9px; }
-  .proj { padding:10px; margin-bottom:6px; }
-  .proj h4 { font-size:11.5px; }
-  .proj p { font-size:9.5px; }
-  .tl-item { margin-bottom:10px; }
-  .tl-title { font-size:11px; }
-  .tl-desc { font-size:9.5px; }
-  .contact-item { padding:8px 10px; }
-  .sticky { font-size:13px; padding:10px 12px; }
-  .handwritten { font-size:15px; }
+  body { padding-top:0; }
+  .book-wrapper { width:820px; height:580px; transform:scale(0.6); perspective:1800px; }
+  .book-wrapper.cover-only { transform:translateX(-25%) scale(0.6); }
+  .book { transform:rotateX(2deg) rotateY(-3deg); }
   .nav-btn-fixed { width:36px; height:36px; }
   .nav-btn-fixed.prev { left:6px; }
   .nav-btn-fixed.next { right:6px; }
@@ -255,93 +230,21 @@ p,li { font-size:11px; line-height:1.75; color:#1a3a6a; }
 
 @media (max-width:480px) {
   body { padding-top:0; }
-  .book-wrapper { width:92vw; height:58vw; min-height:0; perspective:1400px; }
-  .book-wrapper.cover-only { transform:translateX(-25%); }
+  .book-wrapper { width:820px; height:580px; transform:scale(0.42); perspective:1800px; }
+  .book-wrapper.cover-only { transform:translateX(-25%) scale(0.42); }
   .book { transform:rotateX(1deg) rotateY(0deg); }
   .book:hover { transform:rotateX(1deg) rotateY(0deg); }
-  .spine { left:-12px; width:14px; }
-  .binding-thread { left:-1px; width:4px; }
-  .content { padding:16px 12px 20px 20px; }
-  .face-front::after { left:18px; }
-  .face-back::after { right:18px; }
-  .cover-title { font-size:24px; letter-spacing:1px; }
-  .cover-name-sub { font-size:14px; }
-  .cover-role { font-size:7px; letter-spacing:3px; margin-bottom:8px; }
-  .cover-tagline { font-size:10px; margin-top:14px; }
-  .cover-year-badge { font-size:8px; margin-top:20px; padding:4px 12px; }
-  .profile-frame { width:75px; height:75px; margin-bottom:10px; }
-  .cover-border { inset:10px; }
-  .cover-border-inner { inset:14px; }
-  .about-profile { flex-direction:column; text-align:center; padding:10px 8px; gap:8px; }
-  .about-profile .profile-frame { width:70px; height:70px; margin-bottom:0; }
-  .about-profile-info { display:flex; flex-direction:column; align-items:center; }
-  .about-profile-info h3 { font-size:16px; }
-  .section-tag { font-size:7px; letter-spacing:3px; }
-  h2 { font-size:16px; margin-bottom:6px; }
-  h3 { font-size:11px; margin-bottom:4px; }
-  p,li { font-size:9.5px; line-height:1.65; }
-  .stat-row { gap:6px; }
-  .stat-num { font-size:20px; }
-  .stat-box { padding:8px 4px; }
-  .skill-grid { grid-template-columns:1fr; gap:5px; }
-  .skill-card { padding:8px; }
-  .skill-card h4 { font-size:10px; }
-  .skill-card p { font-size:8.5px; line-height:1.4; }
-  .tag-pill { font-size:7px; padding:1px 5px; }
-  .proj { padding:8px; margin-bottom:5px; }
-  .proj h4 { font-size:10.5px; }
-  .proj p { font-size:9px; line-height:1.5; }
-  .proj-links { gap:5px; margin-top:4px; }
-  .proj-link { font-size:8px; padding:2px 6px; }
-  .tl { padding-left:16px; }
-  .tl-item { padding-left:8px; margin-bottom:8px; }
-  .tl-item::before { width:7px; height:7px; left:-16px; }
-  .tl-year { font-size:8px; }
-  .tl-title { font-size:10px; }
-  .tl-desc { font-size:9px; }
-  .contact-grid { gap:5px; }
-  .contact-item { padding:7px 8px; gap:6px; }
-  .c-icon { width:26px; height:26px; font-size:8px; }
-  .c-name { font-size:10px; }
-  .c-handle { font-size:8px; }
-  .sticky { font-size:12px; padding:8px 10px; }
-  .sketch { padding:6px; }
-  .handwritten { font-size:14px; }
-  .script { font-size:16px; }
-  .toc-list li { font-size:10px; padding:5px 0; }
-  .toc-num { font-size:11px; min-width:18px; margin-right:8px; }
-  .toc-pg { font-size:8px; }
   .nav-btn-fixed { width:32px; height:32px; }
   .nav-btn-fixed.prev { left:4px; }
   .nav-btn-fixed.next { right:4px; }
   .nav-btn-fixed svg { width:12px; height:12px; }
   .dots-bar { padding:4px 8px; gap:5px; bottom:6px; border-radius:18px; }
   .dot { width:4px; height:4px; }
-  .page-num { font-size:8px; bottom:8px; }
-  .face-front .page-num { right:12px; }
-  .face-back .page-num { left:12px; }
-  .curl::before { border-width:0 0 20px 20px; }
 }
 
 @media (max-width:360px) {
-  .book-wrapper { width:93vw; height:64vw; }
-  .book-wrapper.cover-only { transform:translateX(-25%); }
-  .content { padding:12px 10px 16px 16px; }
-  h2 { font-size:14px; margin-bottom:5px; }
-  p,li { font-size:8.5px; line-height:1.6; }
-  h3 { font-size:10px; }
-  .section-tag { font-size:6.5px; }
-  .proj h4 { font-size:9.5px; }
-  .proj p { font-size:8px; }
-  .proj-link { font-size:7.5px; padding:1px 5px; }
-  .skill-card h4 { font-size:9px; }
-  .skill-card p { font-size:8px; }
-  .stat-num { font-size:17px; }
-  .tl-title { font-size:9px; }
-  .tl-desc { font-size:8px; }
-  .cover-title { font-size:20px; }
-  .cover-name-sub { font-size:12px; }
-  .profile-frame { width:65px; height:65px; }
+  .book-wrapper { width:820px; height:580px; transform:scale(0.34); }
+  .book-wrapper.cover-only { transform:translateX(-25%) scale(0.34); }
 }
 </style>
 </head>
