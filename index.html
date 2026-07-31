@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usama Sharif — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Code+Pro:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --leather-dark: #1c120a;
+  --leather-mid: #2c1810;
+  --leather-light: #3d2517;
+  --gold: #c8a96e;
+  --gold-light: #e8d5b0;
+  --gold-dark: #9a7a48;
+  --page-bg: #f6f1e6;
+  --page-alt: #f0e9d8;
+  --ink: #000000;
+  --ink-light: #1a3a6a;
+  --ink-faded: #2a5090;
+  --margin-red: rgba(195,75,75,0.22);
+  --line-color: rgba(140,125,105,0.12);
+  --shadow-warm: rgba(30,15,5,0.35);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; background:#0e0a06; }
+body {
+  display:flex; justify-content:center; align-items:center;
+  font-family:'Lora',serif;
+  background-image:
+    radial-gradient(ellipse at 25% 40%,rgba(50,30,15,0.6) 0%,transparent 60%),
+    radial-gradient(ellipse at 75% 60%,rgba(40,22,8,0.5) 0%,transparent 60%),
+    radial-gradient(circle at 50% 50%,rgba(25,15,5,1) 0%,#0e0a06 100%);
+}
+
+.desk { position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ========== BOOK ========== */
+.book-wrapper { position:relative; z-index:1; width:820px; height:580px; perspective:2400px; }
+.book { width:100%; height:100%; position:relative; transform-style:preserve-3d; transform:rotateX(3deg) rotateY(-6deg); transition:transform 0.4s; }
+
+/* spine */
+.spine { position:absolute; left:-16px; top:-2px; width:18px; height:calc(100% + 4px);
+  background:linear-gradient(90deg,var(--leather-dark),var(--leather-mid) 30%,var(--leather-light) 50%,var(--leather-mid) 70%,var(--leather-dark));
+  transform:rotateY(-90deg); transform-origin:right center; border-radius:5px 0 0 5px; box-shadow:-4px 0 15px rgba(0,0,0,0.6); z-index:200; }
+.spine::after { content:''; position:absolute; left:3px; top:10px; bottom:10px; right:3px; border:1px solid rgba(200,169,110,0.2); border-radius:3px; }
+.binding-thread { position:absolute; left:-2px; top:0; width:6px; height:100%; z-index:210;
+  background:repeating-linear-gradient(180deg,transparent 0px,transparent 18px,var(--gold-dark) 18px,var(--gold-dark) 22px,transparent 22px,transparent 28px); opacity:0.4; }
+
+/* pages */
+.page { position:absolute; width:50%; height:100%; right:0; top:0; transform-origin:left center; transform-style:preserve-3d; transition:transform 1s cubic-bezier(0.2,0.8,0.3,1); }
+.page.flipped { transform:rotateY(-180deg); }
+
+.face { position:absolute; width:100%; height:100%; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:0 6px 6px 0; }
+
+.face-front { background:var(--page-bg); box-shadow:3px 2px 15px var(--shadow-warm); }
+.face-back { background:var(--page-alt); transform:rotateY(180deg); box-shadow:-3px 2px 15px var(--shadow-warm); }
+
+/* ruled lines */
+.face-front::before,.face-back::before { content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(180deg,transparent 0px,transparent 29px,var(--line-color) 29px,var(--line-color) 30px); pointer-events:none; }
+.face-front::after { content:''; position:absolute; top:0; bottom:0; left:40px; width:1.5px; background:var(--margin-red); pointer-events:none; }
+.face-back::after { content:''; position:absolute; top:0; bottom:0; right:40px; width:1.5px; background:var(--margin-red); pointer-events:none; }
+
+.page-edges { position:absolute; right:-1px; top:4px; width:4px; height:calc(100% - 8px);
+  background:repeating-linear-gradient(180deg,#e8dcc4 0px,#e8dcc4 1px,#f2ecdc 1px,#f2ecdc 2.5px); z-index:0; }
+
+.curl { position:absolute; bottom:0; right:0; width:30px; height:30px; z-index:10; pointer-events:none; overflow:hidden; }
+.curl::before { content:''; position:absolute; bottom:0; right:0; border-style:solid; border-width:0 0 30px 30px;
+  border-color:transparent transparent #ddd5c5 transparent; box-shadow:-2px -2px 4px rgba(0,0,0,0.06); transition:border-width 0.3s; }
+.page:hover .curl::before { border-width:0 0 36px 36px; }
+
+.page-num { position:absolute; bottom:14px; font-family:'Source Code Pro',monospace; font-size:10px; font-weight:300; color:#1a3a6a; letter-spacing:1px; z-index:5; }
+.face-front .page-num { right:22px; }
+.face-back .page-num { left:22px; }
+
+/* ========== CONTENT (NO SCROLL) ========== */
+.content { position:relative; z-index:2; padding:32px 36px 38px 44px; height:100%; overflow:hidden; display:flex; flex-direction:column; transform:translateZ(0); }
+
+.section-tag { font-family:'Source Code Pro',monospace; font-size:8px; font-weight:500; letter-spacing:4px; text-transform:uppercase; color:#1a3a6a; margin-bottom:4px; }
+h2 { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#000; line-height:1.25; margin-bottom:10px; }
+h3 { font-family:'Playfair Display',serif; font-size:14px; font-weight:700; color:#000; margin-bottom:6px; }
+p,li { font-size:11px; line-height:1.75; color:#1a3a6a; }
+.sep { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:10px 0; flex-shrink:0; }
+
+.handwritten { font-family:'Caveat',cursive; font-size:17px; color:#1a3a6a; line-height:1.4; }
+.script { font-family:'Dancing Script',cursive; font-size:20px; color:#1a3a6a; }
+.serif-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#1a3a6a; line-height:1.6; }
+
+.tag-pill { display:inline-block; font-family:'Source Code Pro',monospace; font-size:8px; font-weight:400; padding:2px 7px;
+  background:rgba(26,58,106,0.04); border:1px solid rgba(26,58,106,0.18); border-radius:12px; color:#1a3a6a; }
+
+.stat-row { display:flex; gap:10px; margin:8px 0; flex-shrink:0; }
+.stat-box { flex:1; text-align:center; padding:10px 6px; background:rgba(26,58,106,0.025); border:1px solid rgba(26,58,106,0.1); border-radius:6px; }
+.stat-num { font-family:'Playfair Display',serif; font-size:26px; font-weight:900; color:#000; line-height:1; }
+.stat-lbl { font-family:'Source Code Pro',monospace; font-size:8px; text-transform:uppercase; letter-spacing:2px; color:#1a3a6a; margin-top:4px; }
+
+.skill-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; flex:1; align-content:start; }
+.skill-card { padding:10px; background:rgba(26,58,106,0.02); border:1px solid rgba(26,58,106,0.1); border-radius:6px; transition:all 0.3s; }
+.skill-card:hover { background:rgba(26,58,106,0.04); transform:translateY(-1px); }
+.skill-card h4 { font-family:'Playfair Display',serif; font-size:11.5px; font-weight:700; color:#000; margin-bottom:3px; }
+.skill-card p { font-size:9.5px; line-height:1.5; color:#1a3a6a; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:3px; margin-top:5px; }
+
+.proj { padding:12px; margin-bottom:8px; background:rgba(26,58,106,0.02); border:1px solid rgba(26,58,106,0.1); border-radius:6px; border-left:3px solid #1a3a6a; transition:all 0.3s; flex-shrink:0; }
+.proj:hover { background:rgba(26,58,106,0.04); transform:translateX(3px); }
+.proj h4 { font-family:'Playfair Display',serif; font-size:13px; font-weight:700; color:#000; margin-bottom:3px; }
+.proj p { font-size:10px; line-height:1.6; color:#1a3a6a; }
+.proj-links { display:flex; gap:6px; margin-top:5px; }
+.proj-link { font-family:'Source Code Pro',monospace; font-size:8.5px; font-weight:500; color:#1a3a6a; text-decoration:none;
+  padding:3px 8px; border:1px solid rgba(26,58,106,0.25); border-radius:4px; transition:all 0.3s; position:relative; z-index:9999; cursor:pointer; }
+.proj-link:hover { background:rgba(26,58,106,0.08); }
+
+/* timeline */
+.tl { position:relative; padding-left:20px; flex:1; align-content:start; }
+.tl::before { content:''; position:absolute; left:4px; top:4px; bottom:4px; width:1.5px; background:linear-gradient(180deg,#1a3a6a,#4a7ac8,#1a3a6a); }
+.tl-item { position:relative; margin-bottom:12px; padding-left:10px; }
+.tl-item::before { content:''; position:absolute; left:-20px; top:5px; width:9px; height:9px; border-radius:50%; background:#1a3a6a; border:2px solid var(--page-bg); box-shadow:0 0 0 2px rgba(26,58,106,0.25); }
+.tl-year { font-family:'Source Code Pro',monospace; font-size:9px; font-weight:600; color:#1a3a6a; letter-spacing:1px; }
+.tl-title { font-family:'Playfair Display',serif; font-size:12px; font-weight:700; color:#000; margin:1px 0; }
+.tl-desc { font-size:10px; line-height:1.6; color:#1a3a6a; }
+
+/* contact */
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; flex-shrink:0; }
+.contact-item { display:flex; align-items:center; gap:8px; padding:10px 12px; background:rgba(26,58,106,0.025); border:1px solid rgba(26,58,106,0.1); border-radius:8px; text-decoration:none; color:#1a3a6a; transition:all 0.3s; }
+.contact-item:hover { background:rgba(26,58,106,0.06); transform:translateY(-1px); }
+.c-icon { width:30px; height:30px; display:flex; align-items:center; justify-content:center; background:rgba(26,58,106,0.1); border-radius:50%; font-family:'Source Code Pro',monospace; font-size:10px; font-weight:600; color:#1a3a6a; flex-shrink:0; }
+.c-name { font-size:11px; font-weight:600; color:#000; }
+.c-handle { font-size:9px; color:#1a3a6a; margin-top:1px; }
+
+/* sticky */
+.sticky { background:#fef9a8; padding:12px 14px; border-radius:2px; box-shadow:2px 3px 8px rgba(0,0,0,0.1);
+  font-family:'Caveat',cursive; font-size:15px; color:#1a3a6a; line-height:1.4; position:relative; transform:rotate(-0.8deg); flex-shrink:0; }
+.sticky::before { content:''; position:absolute; top:-5px; left:50%; transform:translateX(-50%); width:40px; height:12px; background:rgba(200,169,110,0.35); border-radius:2px; }
+
+.sketch { border:1.5px dashed rgba(26,58,106,0.25); border-radius:8px; padding:10px; flex-shrink:0; }
+
+/* highlight */
+.hl { background:linear-gradient(120deg,rgba(26,58,106,0.1),rgba(26,58,106,0.2)); padding:1px 5px; border-radius:3px; font-weight:600; color:#000; }
+
+/* ========== COVER ========== */
+.cover-face { background:linear-gradient(155deg,#2a1a10,#1a0e06 40%,#0e0804); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; position:relative; box-shadow:5px 3px 25px rgba(0,0,0,0.6); }
+.cover-face::before { content:''; position:absolute; inset:0; pointer-events:none;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)' opacity='0.06'/%3E%3C/svg%3E"); }
+.cover-border { position:absolute; inset:16px; border:1.5px solid rgba(200,169,110,0.3); border-radius:3px; pointer-events:none; }
+.cover-border-inner { position:absolute; inset:22px; border:0.5px solid rgba(200,169,110,0.15); pointer-events:none; }
+.corner { position:absolute; width:30px; height:30px; }
+.corner svg { width:100%; height:100%; }
+.corner svg path { fill:none; stroke:var(--gold); stroke-width:1.2; opacity:0.5; }
+.corner.tl { top:24px; left:24px; } .corner.tr { top:24px; right:24px; transform:scaleX(-1); }
+.corner.bl { bottom:24px; left:24px; transform:scaleY(-1); } .corner.br { bottom:24px; right:24px; transform:scale(-1,-1); }
+.cover-ornament-line { width:100px; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dark),transparent); margin:10px 0; }
+.cover-role { font-family:'Source Code Pro',monospace; font-size:10px; font-weight:300; letter-spacing:6px; text-transform:uppercase; color:var(--gold-dark); margin-bottom:14px; }
+.cover-title { font-family:'Playfair Display',serif; font-size:46px; font-weight:900; letter-spacing:4px; text-transform:uppercase; color:var(--gold-light); text-shadow:3px 3px 8px rgba(0,0,0,0.6); line-height:1.15; }
+.cover-name-sub { font-family:'Dancing Script',cursive; font-size:24px; color:var(--gold); margin-top:6px; font-weight:500; }
+.cover-tagline { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--gold-dark); margin-top:20px; letter-spacing:1px; }
+.cover-year-badge { font-family:'Source Code Pro',monospace; font-size:9px; font-weight:400; letter-spacing:3px; color:rgba(200,169,110,0.4); margin-top:28px; padding:5px 16px; border:1px solid rgba(200,169,110,0.15); border-radius:2px; }
+.open-hint { position:absolute; bottom:24px; display:flex; align-items:center; gap:8px; font-family:'Source Code Pro',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(200,169,110,0.35); animation:pulse-hint 2.5s ease-in-out infinite; }
+@keyframes pulse-hint { 0%,100%{opacity:0.35} 50%{opacity:0.7} }
+.open-hint svg { width:14px; height:14px; }
+.open-hint svg path { fill:none; stroke:rgba(200,169,110,0.4); stroke-width:1.5; }
+
+/* profile frame */
+.profile-frame { width:110px; height:110px; border-radius:50%; padding:4px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark),var(--gold)); margin-bottom:14px;
+  box-shadow:0 0 25px rgba(200,169,110,0.2),0 0 50px rgba(0,0,0,0.4); position:relative; z-index:2; flex-shrink:0; }
+.profile-frame img { width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; border:2px solid var(--leather-dark); }
+
+.about-profile { display:flex; align-items:center; gap:14px; padding:12px; background:rgba(26,58,106,0.025); border:1px solid rgba(26,58,106,0.1); border-radius:10px; flex-shrink:0; }
+.about-profile .profile-frame { width:80px; height:80px; margin-bottom:0; flex-shrink:0; }
+.about-profile-info h3 { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:#000; margin-bottom:3px; }
+.about-profile-info .role-tag { font-family:'Source Code Pro',monospace; font-size:8px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:#1a3a6a; display:inline-block; padding:2px 8px; border:1px solid rgba(26,58,106,0.25); border-radius:12px; margin-top:3px; }
+
+/* back cover */
+.back-face { background:linear-gradient(155deg,#2a1a10,#1a0e06 40%,#0e0804); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; position:relative; }
+.back-face::before { content:''; position:absolute; inset:0; pointer-events:none;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)' opacity='0.06'/%3E%3C/svg%3E"); }
+.back-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--gold); max-width:340px; line-height:1.7; margin-bottom:18px; }
+.back-author { font-family:'Playfair Display',serif; font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:var(--gold-light); }
+.back-sub { font-family:'Source Code Pro',monospace; font-size:9px; color:rgba(232,213,176,0.5); letter-spacing:3px; margin-top:8px; }
+.back-copy { font-family:'Source Code Pro',monospace; font-size:9px; color:rgba(200,169,110,0.4); letter-spacing:2px; margin-top:35px; }
+
+/* TOC */
+.toc-list { list-style:none; margin-top:8px; flex:1; }
+.toc-list li { display:flex; align-items:baseline; padding:6px 0; border-bottom:1px dotted rgba(200,169,110,0.15); font-size:11.5px; cursor:pointer; transition:all 0.3s; }
+.toc-list li:hover { padding-left:5px; color:#1a3a6a; }
+.toc-num { font-family:'Playfair Display',serif; font-weight:700; color:#1a3a6a; margin-right:10px; font-size:13px; min-width:22px; }
+.toc-title { flex:1; }
+.toc-pg { font-family:'Source Code Pro',monospace; font-size:9px; color:#1a3a6a; }
+
+/* ========== NAV ========== */
+.nav-btn-fixed { position:fixed; top:50%; transform:translateY(-50%); z-index:1000; width:44px; height:44px;
+  border:1px solid rgba(200,169,110,0.25); background:rgba(14,10,6,0.8); backdrop-filter:blur(10px);
+  color:var(--gold); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.3s; }
+.nav-btn-fixed:hover:not(:disabled) { background:rgba(200,169,110,0.15); border-color:var(--gold); transform:translateY(-50%) scale(1.1); }
+.nav-btn-fixed:disabled { opacity:0.15; cursor:default; }
+.nav-btn-fixed.prev { left:20px; }
+.nav-btn-fixed.next { right:20px; }
+
+.dots-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:10px; z-index:1000;
+  background:rgba(14,10,6,0.75); backdrop-filter:blur(10px); padding:8px 16px; border-radius:30px; border:1px solid rgba(200,169,110,0.1); }
+.dots { display:flex; gap:5px; }
+.dot { width:6px; height:6px; border-radius:50%; background:rgba(200,169,110,0.15); border:1px solid rgba(200,169,110,0.2); transition:all 0.35s; cursor:pointer; }
+.dot.active { background:var(--gold); border-color:var(--gold); transform:scale(1.4); box-shadow:0 0 8px rgba(200,169,110,0.3); }
+.dot:hover:not(.active) { background:rgba(200,169,110,0.3); }
+.page-counter { font-family:'Source Code Pro',monospace; font-size:9px; font-weight:400; color:rgba(200,169,110,0.35); letter-spacing:1px; min-width:40px; text-align:center; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width:900px) {
+  .book-wrapper { width:94vw; height:66vw; }
+  .content { padding:28px 30px 34px 40px; }
+  .cover-title { font-size:36px; }
+  .h2 { font-size:20px; }
+  .nav-btn-fixed { width:40px; height:40px; }
+  .nav-btn-fixed.prev { left:12px; }
+  .nav-btn-fixed.next { right:12px; }
+}
+
+@media (max-width:700px) {
+  body { align-items:flex-start; padding-top:10px; }
+  .book-wrapper { width:98vw; height:56vw; min-height:340px; }
+  .book { transform:rotateX(2deg) rotateY(-3deg); }
+  .content { padding:24px 22px 30px 32px; }
+  .cover-title { font-size:28px; letter-spacing:2px; }
+  .cover-name-sub { font-size:16px; }
+  .cover-role { font-size:8px; letter-spacing:4px; margin-bottom:10px; }
+  .cover-tagline { font-size:11px; }
+  .profile-frame { width:90px; height:90px; }
+  h2 { font-size:18px; margin-bottom:8px; }
+  h3 { font-size:12px; }
+  p,li { font-size:10px; line-height:1.7; }
+  .stat-num { font-size:22px; }
+  .skill-grid { gap:6px; }
+  .skill-card { padding:8px; }
+  .skill-card h4 { font-size:10.5px; }
+  .skill-card p { font-size:9px; }
+  .proj { padding:10px; margin-bottom:6px; }
+  .proj h4 { font-size:11.5px; }
+  .proj p { font-size:9.5px; }
+  .tl-item { margin-bottom:10px; }
+  .tl-title { font-size:11px; }
+  .tl-desc { font-size:9.5px; }
+  .contact-item { padding:8px 10px; }
+  .sticky { font-size:13px; padding:10px 12px; }
+  .handwritten { font-size:15px; }
+  .nav-btn-fixed { width:36px; height:36px; }
+  .nav-btn-fixed.prev { left:6px; }
+  .nav-btn-fixed.next { right:6px; }
+  .dots-bar { padding:6px 12px; bottom:12px; }
+  .dot { width:5px; height:5px; }
+}
+
+@media (max-width:480px) {
+  body { padding-top:5px; }
+  .book-wrapper { width:99vw; height:140vw; min-height:420px; perspective:1800px; }
+  .book { transform:rotateX(1deg) rotateY(0deg); }
+  .book:hover { transform:rotateX(1deg) rotateY(0deg); }
+  .spine { left:-12px; width:14px; }
+  .binding-thread { left:-1px; width:4px; }
+  .content { padding:28px 18px 32px 26px; }
+  .face-front::after { left:26px; }
+  .face-back::after { right:26px; }
+  .cover-title { font-size:24px; letter-spacing:1px; }
+  .cover-name-sub { font-size:14px; }
+  .cover-role { font-size:7px; letter-spacing:3px; margin-bottom:8px; }
+  .cover-tagline { font-size:10px; margin-top:14px; }
+  .cover-year-badge { font-size:8px; margin-top:20px; padding:4px 12px; }
+  .profile-frame { width:75px; height:75px; margin-bottom:10px; }
+  .cover-border { inset:10px; }
+  .cover-border-inner { inset:14px; }
+  .about-profile { flex-direction:column; text-align:center; padding:10px 8px; gap:8px; }
+  .about-profile .profile-frame { width:70px; height:70px; margin-bottom:0; }
+  .about-profile-info { display:flex; flex-direction:column; align-items:center; }
+  .about-profile-info h3 { font-size:16px; }
+  .section-tag { font-size:7px; letter-spacing:3px; }
+  h2 { font-size:16px; margin-bottom:6px; }
+  h3 { font-size:11px; margin-bottom:4px; }
+  p,li { font-size:9.5px; line-height:1.65; }
+  .stat-row { gap:6px; }
+  .stat-num { font-size:20px; }
+  .stat-box { padding:8px 4px; }
+  .skill-grid { grid-template-columns:1fr; gap:5px; }
+  .skill-card { padding:8px; }
+  .skill-card h4 { font-size:10px; }
+  .skill-card p { font-size:8.5px; line-height:1.4; }
+  .tag-pill { font-size:7px; padding:1px 5px; }
+  .proj { padding:8px; margin-bottom:5px; }
+  .proj h4 { font-size:10.5px; }
+  .proj p { font-size:9px; line-height:1.5; }
+  .proj-links { gap:5px; margin-top:4px; }
+  .proj-link { font-size:8px; padding:2px 6px; }
+  .tl { padding-left:16px; }
+  .tl-item { padding-left:8px; margin-bottom:8px; }
+  .tl-item::before { width:7px; height:7px; left:-16px; }
+  .tl-year { font-size:8px; }
+  .tl-title { font-size:10px; }
+  .tl-desc { font-size:9px; }
+  .contact-grid { gap:5px; }
+  .contact-item { padding:7px 8px; gap:6px; }
+  .c-icon { width:26px; height:26px; font-size:8px; }
+  .c-name { font-size:10px; }
+  .c-handle { font-size:8px; }
+  .sticky { font-size:12px; padding:8px 10px; }
+  .sketch { padding:6px; }
+  .handwritten { font-size:14px; }
+  .script { font-size:16px; }
+  .toc-list li { font-size:10px; padding:5px 0; }
+  .toc-num { font-size:11px; min-width:18px; margin-right:8px; }
+  .toc-pg { font-size:8px; }
+  .nav-btn-fixed { width:32px; height:32px; }
+  .nav-btn-fixed.prev { left:4px; }
+  .nav-btn-fixed.next { right:4px; }
+  .nav-btn-fixed svg { width:12px; height:12px; }
+  .dots-bar { padding:4px 8px; gap:5px; bottom:6px; border-radius:18px; }
+  .dot { width:4px; height:4px; }
+  .page-num { font-size:8px; bottom:8px; }
+  .face-front .page-num { right:12px; }
+  .face-back .page-num { left:12px; }
+  .curl::before { border-width:0 0 20px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="desk"></div>
+
+<div class="book-wrapper">
+<div class="book" id="book">
+<div class="spine"></div>
+<div class="binding-thread"></div>
+
+<!-- ===== P1: COVER ===== -->
+<div class="page z-front" id="p1" style="--pi:1">
+  <div class="face cover-face">
+    <div class="cover-border"></div><div class="cover-border-inner"></div>
+    <div class="corner tl"><svg viewBox="0 0 30 30"><path d="M2,28 L2,8 Q2,2 8,2 L28,2"/></svg></div>
+    <div class="corner tr"><svg viewBox="0 0 30 30"><path d="M2,28 L2,8 Q2,2 8,2 L28,2"/></svg></div>
+    <div class="corner bl"><svg viewBox="0 0 30 30"><path d="M2,28 L2,8 Q2,2 8,2 L28,2"/></svg></div>
+    <div class="corner br"><svg viewBox="0 0 30 30"><path d="M2,28 L2,8 Q2,2 8,2 L28,2"/></svg></div>
+    <div class="cover-role">AI Agents &bull; Mathematics &bull; Python</div>
+    <div class="cover-ornament-line"></div>
+    <div class="profile-frame"><img src="profile.jpg" alt="Usama Sharif"></div>
+    <div class="cover-title">USAMA'S<br>PORTFOLIO</div>
+    <div class="cover-name-sub">Usama Sharif</div>
+    <div class="cover-ornament-line"></div>
+    <div class="cover-tagline">"Building Intelligent Systems That Think, Learn & Solve"</div>
+    <div class="cover-year-badge">2025 &mdash; 2026</div>
+    <div class="open-hint"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>OPEN</div>
+  </div>
+  <div class="face face-back" style="background:linear-gradient(155deg,#2a1a10,#1a0e06);">
+    <div class="content" style="display:flex;align-items:center;justify-content:center;text-align:center;">
+      <div>
+        <div class="cover-ornament-line" style="margin:0 auto 14px;"></div>
+        <p class="script" style="font-size:24px;color:var(--gold);">From Numbers to Neural Networks</p>
+        <div class="cover-ornament-line" style="margin:14px auto 0;"></div>
+        <p style="font-size:11px;color:rgba(232,213,176,0.5);margin-top:20px;font-family:'Lora',serif;letter-spacing:1px;">A journey through AI, mathematics,<br>and the art of building intelligent systems</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-edges"></div>
+</div>
+
+<!-- ===== P2: TOC ===== -->
+<div class="page z-front" id="p2" style="--pi:2">
+  <div class="face face-front">
+    <div class="content">
+      <div class="section-tag">Navigation</div>
+      <h2>Table of Contents</h2>
+      <div class="sep"></div>
+      <ul class="toc-list">
+        <li onclick="goTo(0);event.stopPropagation();"><span class="toc-num">01</span><span class="toc-title">Cover Page</span><span class="toc-pg">i</span></li>
+        <li onclick="goTo(1);event.stopPropagation();"><span class="toc-num">02</span><span class="toc-title">About Me</span><span class="toc-pg">1</span></li>
+        <li onclick="goTo(2);event.stopPropagation();"><span class="toc-num">03</span><span class="toc-title">Skills & Expertise</span><span class="toc-pg">2</span></li>
+        <li onclick="goTo(3);event.stopPropagation();"><span class="toc-num">04</span><span class="toc-title">Skills & Expertise (cont.)</span><span class="toc-pg">3</span></li>
+        <li onclick="goTo(4);event.stopPropagation();"><span class="toc-num">05</span><span class="toc-title">Featured Projects</span><span class="toc-pg">4</span></li>
+        <li onclick="goTo(5);event.stopPropagation();"><span class="toc-num">06</span><span class="toc-title">Featured Projects (cont.)</span><span class="toc-pg">5</span></li>
+        <li onclick="goTo(6);event.stopPropagation();"><span class="toc-num">07</span><span class="toc-title">More Projects</span><span class="toc-pg">6</span></li>
+        <li onclick="goTo(7);event.stopPropagation();"><span class="toc-num">08</span><span class="toc-title">My Journey</span><span class="toc-pg">7</span></li>
+        <li onclick="goTo(8);event.stopPropagation();"><span class="toc-num">09</span><span class="toc-title">Education & Goals</span><span class="toc-pg">8</span></li>
+        <li onclick="goTo(9);event.stopPropagation();"><span class="toc-num">10</span><span class="toc-title">Contact & Connect</span><span class="toc-pg">9</span></li>
+      </ul>
+    </div>
+    <div class="page-num">ii</div><div class="curl"></div>
+  </div>
+  <div class="face face-back">
+    <div class="content" style="justify-content:center;">
+      <div class="section-tag">Overview</div>
+      <h2>At a Glance</h2>
+      <div class="sep"></div>
+      <div class="sticky">Welcome to my portfolio — a collection of everything I've built, learned, and envisioned. Flip through each page to explore.</div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num">67+</div><div class="stat-lbl">Repositories</div></div>
+        <div class="stat-box"><div class="stat-num">10+</div><div class="stat-lbl">Projects</div></div>
+        <div class="stat-box"><div class="stat-num">13+</div><div class="stat-lbl">Week Course</div></div>
+      </div>
+      <div class="sep"></div>
+      <p class="handwritten" style="text-align:center;">Every page tells a story of building, learning & growing.</p>
+    </div>
+    <div class="page-num">1</div><div class="curl"></div>
+  </div>
+  <div class="page-edges"></div>
+</div>
+
+<!-- ===== P3: ABOUT ME ===== -->
+<div class="page z-front" id="p3" style="--pi:3">
+  <div class="face face-front">
+    <div class="content">
+      <div class="section-tag">Who I Am</div>
+      <h2>About Me</h2>
+      <div class="sep"></div>
+      <div class="about-profile">
+        <div class="profile-frame"><img src="profile.jpg" alt="Usama Sharif"></div>
+        <div class="about-profile-info">
+          <h3>Usama Sharif</h3>
+          <p style="font-size:10px;color:#1a3a6a;margin-top:2px;">AI Agents Specialist & Mathematician</p>
+          <span class="role-tag">AI Agents</span> <span class="role-tag">Math</span> <span class="role-tag">Python</span>
+        </div>
+      </div>
+      <p>I'm <span class="hl">Usama Sharif</span> — an AI Agents Specialist and Mathematician passionate about building intelligent, autonomous systems. I combine deep mathematical foundations with cutting-edge AI to create solutions that don't just work — they <em>think</em>.</p>
+      <br>
+      <p>From developing AI-powered assignment solvers to authoring comprehensive courses on <span class="hl">Physical AI & Humanoid Robotics</span>, I'm on a mission to push the boundaries of what intelligent systems can achieve.</p>
+      <br>
+      <div class="sketch">
+        <p class="serif-quote" style="padding-left:8px;border-left:2px solid var(--gold);">"Turning Ideas into Intelligence — that's not just a tagline, it's how I approach every project."</p>
+      </div>
+    </div>
+    <div class="page-num">2</div><div class="curl"></div>
+  </div>
+  <div class="face face-back">
+    <div class="content">
+      <div class="section-tag">What I Bring</div>
+      <h2>Skills & Expertise</h2>
+      <div class="sep"></div>
+      <div class="skill-grid">
+        <div class="skill-card"><h4>AI Agents & Automation</h4><p>Building autonomous agents that reason, plan & execute complex tasks.</p>
+          <div class="skill-tags"><span class="tag-pill">AI Agents</span><span class="tag-pill">LLMs</span><span class="tag-pill">Prompt Eng.</span><span class="tag-pill">Automation</span></div></div>
+        <div class="skill-card"><h4>Mathematics</h4><p>Calculus, linear algebra, statistics & computational problem solving.</p>
+          <div class="skill-tags"><span class="tag-pill">Calculus</span><span class="tag-pill">Linear Algebra</span><span class="tag-pill">Statistics</span></div></div>
+        <div class="skill-card"><h4>Python Development</h4><p>Web apps, data tools, calculators & AI-powered applications.</p>
+          <div class="skill-tags"><span class="tag-pill">Python</span><span class="tag-pill">Streamlit</span><span class="tag-pill">Pandas</span><span class="tag-pill">NumPy</span></div></div>
+        <div class="skill-card"><h4>Web Development</h4><p>Modern responsive apps with HTML, CSS, JS, TS & Next.js.</p>
+          <div class="skill-tags"><span class="tag-pill">HTML/CSS</span><span class="tag-pill">JavaScript</span><span class="tag-pill">TypeScript</span><span class="tag-pill">Next.js</span></div></div>
+      </div>
+    </div>
+    <div class="page-num">3</div><div class="curl"></div>
+  </div>
+  <div class="page-edges"></div>
+</div>
+
+<!-- ===== P4: SKILLS CONT. ===== -->
+<div class="page z-front" id="p4" style="--pi:4">
+  <div class="face face-front">
+    <div class="content">
+      <div class="section-tag">More Expertise</div>
+      <h2>Skills & Expertise <span style="font-size:12px;color:#1a3a6a;font-style:italic;">(cont.)</span></h2>
+      <div class="sep"></div>
+      <div class="skill-grid">
+        <div class="skill-card"><h4>Robotics & Physical AI</h4><p>ROS 2, Gazebo, NVIDIA Isaac, humanoid robotics & sim-to-real transfer.</p>
+          <div class="skill-tags"><span class="tag-pill">ROS 2</span><span class="tag-pill">Gazebo</span><span class="tag-pill">NVIDIA Isaac</span><span class="tag-pill">Humanoid</span></div></div>
+        <div class="skill-card"><h4>Technical Education</h4><p>Comprehensive courses & textbooks on AI, robotics & mathematics.</p>
+          <div class="skill-tags"><span class="tag-pill">Course Design</span><span class="tag-pill">Tech Writing</span><span class="tag-pill">Mentoring</span></div></div>
+      </div>
+      <div class="sep" style="margin-top:14px;"></div>
+      <div class="sketch">
+        <h3 style="margin-bottom:6px;">What Drives Me</h3>
+        <p>Every line of code I write serves a purpose. From AI agents that reason autonomously to simple calculators that solve everyday problems — my goal is always the same: <span class="hl">build intelligent, elegant solutions</span>.</p>
+      </div>
+    </div>
+    <div class="page-num">4</div><div class="curl"></div>
+  </div>
+  <div class="face face-back">
+    <div class="content">
+      <div class="section-tag">Featured Projects</div>
+      <h2>Featured Projects</h2>
+      <div class="sep"></div>
+      <div class="proj">
+        <h4>AI Assignment Solver</h4>
+        <p>An intelligent AI-powered tool that helps solve complex assignments using advanced language models and structured reasoning.</p>
+        <div class="skill-tags" style="margin-top:6px;"><span class="tag-pill">Next.js</span><span class="tag-pill">AI/LLM</span><span class="tag-pill">Vercel</span></div>
+        <div class="proj-links"><a href="https://assignment-solver-pink.vercel.app/" target="_blank" class="proj-link">Live Demo &rarr;</a></div>
+      </div>
+      <div class="proj">
+        <h4>Physical AI & Humanoid Robotics</h4>
+        <p>A comprehensive 13-week online textbook covering ROS 2, NVIDIA Isaac, RL & humanoid robotics with 50+ code examples.</p>
+        <div class="skill-tags" style="margin-top:6px;"><span class="tag-pill">Docusaurus</span><span class="tag-pill">ROS 2</span><span class="tag-pill">NVIDIA Isaac</span></div>
+        <div class="proj-links">
+          <a href="https://usama6513.github.io/physical-ai-book/" target="_blank" class="proj-link">Live Demo &rarr;</a>
+          <a href="https://github.com/usama6513/physical-ai-book" target="_blank" class="proj-link">GitHub &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="page-num">5</div><div class="curl"></div>
+  </div>
+  <div class="page-edges"></div>
+</div>
+
+<!-- ===== P5: FEATURED PROJECTS CONT. ===== -->
+<div class="page z-front" id="p5" style="--pi:5">
+  <div class="face face-front">
+    <div class="content">
+      <div class="section-tag">Projects</div>
+      <h2>Featured Projects <span style="font-size:12px;color:#1a3a6a;font-style:italic;">(cont.)</span></h2>
+      <div class="sep"></div>
+      <div class="proj">
+        <h4>Unit Converter</h4>
+        <p>A sleek, fast unit conversion tool built with Python & Streamlit for converting between various measurement units instantly.</p>
+        <div class="skill-tags" style="margin-top:6px;"><span class="tag-pill">Python</span><span class="tag-pill">Streamlit</span></div>
+        <div class="proj-links">
+          <a href="https://usama-converter-unit-xba4b6a8y7dj6ybxhw2yqv.streamlit.app/" target="_blank" class="proj-link">Live Demo &rarr;</a>
+          <a href="https://github.com/usama6513/Usama-Converter-unit" target="_blank" class="proj-link">GitHub &rarr;</a>
+        </div>
+      </div>
+      <div class="proj">
+        <h4>Password Generator</h4>
+        <p>A secure, customizable password generator that creates strong, unbreakable passwords with various complexity options.</p>
+        <div class="skill-tags" style="margin-top:6px;"><span class="tag-pill">Python</span><span class="tag-pill">Streamlit</span><span class="tag-pill">Security</span></div>
+        <div class="proj-links">
+          <a href="https://password-uydk9gh8v4ynuphvvyzuak.streamlit.app/" target="_blank" class="proj-link">Live Demo &rarr;</a>
+          <a href="https://github.com/usama6513/password" target="_blank" class="proj-link">GitHub &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="page-num">6</div><div class="curl"></div>
+  </div>
+  <div class="face face-back">
+    <div class="content">
+      <div class="section-tag">Projects</div>
+      <h2>Featured Projects <span style="font-size:12px;color:#1a3a6a;font-style:italic;">(cont.)</span></h2>
+      <div class="sep"></div>
+      <div class="proj">
+        <h4>Scientific Calculator</h4>
+        <p>A powerful scientific calculator with advanced mathematical functions, trigonometry, logarithms & more for complex calculations.</p>
+        <div class="skill-tags" style="margin-top:6px;"><span class="tag-pill">Python</span><span class="tag-pill">Streamlit</span><span class="tag-pill">Mathematics</span></div>
+        <div class="proj-links">
+          <a href="https://aryan-scientific-calculator-x82ppnvacltcpkhuucjxpd.streamlit.app/" target="_blank" class="proj-link">Live Demo &rarr;</a>
+          <a href="https://github.com/usama6513/Aryan-scientific-calculator" target="_blank" class="proj-link">GitHub &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="page-num">7</div><div class="curl"></div>
+  </div>
+  <div class="page-edges"></div>
+</div>
+
+<!-- ===== P6: MORE PROJECTS ===== -->
+<div class="page z-front" id="p6" style="--pi:6">
+  <div class="face face-front">
+    <div class="content">
+      <div class="section-tag">Projects</div>
+      <h2>More Projects</h2>
+      <div class="sep"></div>
+      <div class="proj">
+        <h4>Digital Library Manager</h4>
+        <p>A digital library management system for organizing, searching & managing book collections efficiently.</p>
+        <div class="skill-tags" style="margin-top:6px;"><span class="tag-pill">Python</span><span class="tag-pill">Streamlit</span><span class="tag-pill">Database</span></div>
+        <div class="proj-links">
+          <a href="https://usama-library-g4ufi3gkxkscznbhbzbnyw.streamlit.app/" target="_blank" class="proj-link">Live Demo &rarr;</a>
+          <a href="https://github.com/usama6513/usama-library" target="_blank" class="proj-link">GitHub &rarr;</a>
+        </div>
+      </div>
+      <div class="proj">
+        <h4>Growth Mindset Challenge</h4>
+        <p>An interactive web app designed to help users develop a growth mindset through challenges, tracking & positive reinforcement.</p>
+        <div class="skill-tags" style="margin-top:6px;"><span class="tag-pill">Python</span><span class="tag-pill">Streamlit</span></div>
+        <div class="proj-links">
+          <a href="https://usama-growth-project.streamlit.app/" target="_blank" class="proj-link">Live Demo &rarr;</a>
+          <a href="https://github.com/usama6513/Usama-growth-project" target="_blank" class="proj-link">GitHub &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="page-num">8</div><div class="curl"></div>
+  </div>
+  <div class="face face-back">
+    <div class="content">
+      <div class="section-tag">Projects</div>
+      <h2>More Projects <span style="font-size:12px;color:#1a3a6a;font-style:italic;">(cont.)</span></h2>
+      <div class="sep"></div>
+      <div class="proj">
+        <h4>TaskFlow</h4>
+        <p>A modern task management and workflow organization application built with Next.js for seamless productivity.</p>
+        <div class="skill-tags" style="margin-top:6px;"><span class="tag-pill">Next.js</span><span class="tag-pill">TypeScript</span><span class="tag-pill">Vercel</span></div>
+        <div class="proj-links">
+          <a href="https://frontend-theta-one-25.vercel.app/" target="_blank" class="proj-link">Live Demo &rarr;</a>
+          <a href="https://github.com/usama6513/hack2ph3" target="_blank" class="proj-link">GitHub &rarr;</a>
+        </div>
+      </div>
+      <div class="sep"></div>
+      <div class="sticky" style="transform:rotate(0.5deg);">I believe in building tools that solve real problems. Every project is a step towards making technology more accessible.</div>
+    </div>
+    <div class="page-num">9</div><div class="curl"></div>
+  </div>
+  <div class="page-edges"></div>
+</div>
+
+<!-- ===== P7: JOURNEY ===== -->
+<div class="page z-front" id="p7" style="--pi:7">
+  <div class="face face-front">
+    <div class="content">
+      <div class="section-tag">The Path So Far</div>
+      <h2>My Journey</h2>
+      <div class="sep"></div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-year">2026</div><div class="tl-title">Physical AI & Robotics Textbook</div><div class="tl-desc">Authored a comprehensive 13-week curriculum covering ROS 2, NVIDIA Isaac, humanoid robotics & VLA models with 50+ code examples.</div></div>
+        <div class="tl-item"><div class="tl-year">2026</div><div class="tl-title">AI Assignment Solver</div><div class="tl-desc">Developed an AI-powered tool leveraging large language models to solve complex assignments with structured reasoning.</div></div>
+        <div class="tl-item"><div class="tl-year">2025 — 2026</div><div class="tl-title">Python & Streamlit Apps Suite</div><div class="tl-desc">Built and deployed multiple utility apps including scientific calculator, unit converter, password generator & library manager.</div></div>
+        <div class="tl-item"><div class="tl-year">2025</div><div class="tl-title">AI Agents Specialization</div><div class="tl-desc">Focused on building autonomous AI agents capable of reasoning, planning & executing complex tasks.</div></div>
+        <div class="tl-item"><div class="tl-year">Ongoing</div><div class="tl-title">67+ Open Source Repositories</div><div class="tl-desc">Actively contributing to the developer community spanning AI, Python & web development.</div></div>
+      </div>
+      <div class="sep"></div>
+      <p style="font-size:10px;color:#1a3a6a;margin-bottom:6px;">Follow me on social media:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <a href="https://github.com/usama6513" target="_blank" class="proj-link">GitHub</a>
+        <a href="https://www.linkedin.com/in/usama-sharif-9b903b342" target="_blank" class="proj-link">LinkedIn</a>
+        <a href="https://www.instagram.com/aryan_anjaan65" target="_blank" class="proj-link">Instagram</a>
+        <a href="https://www.tiktok.com/@aryan36951" target="_blank" class="proj-link">TikTok</a>
+        <a href="https://www.facebook.com/share/1Bo3ntgJ8v/" target="_blank" class="proj-link">Facebook</a>
+      </div>
+    </div>
+    <div class="page-num">10</div><div class="curl"></div>
+  </div>
+  <div class="face face-back">
+    <div class="content">
+      <div class="section-tag">Growth</div>
+      <h2>Education & Goals</h2>
+      <div class="sep"></div>
+      <div class="sticky" style="transform:rotate(-0.5deg);">Learning never stops. Every project teaches something new.</div>
+      <br>
+      <h3>Core Foundation</h3>
+      <p>My journey began with mathematics — the universal language of patterns and logic. This foundation became the bedrock for everything I build in AI and software development.</p>
+      <br>
+      <h3>Current Focus</h3>
+      <div class="sketch">
+        <ul style="padding-left:16px;font-size:10px;color:#1a3a6a;line-height:2;">
+          <li>Advanced AI Agent architectures</li>
+          <li>Physical AI & Humanoid Robotics</li>
+          <li>Vision-Language-Action (VLA) Models</li>
+          <li>Sim-to-Real Transfer Learning</li>
+          <li>Reinforcement Learning for Robotics</li>
+        </ul>
+      </div>
+      <br>
+      <h3>Future Vision</h3>
+      <p>To build intelligent systems that bridge the gap between mathematical theory and real-world applications.</p>
+      <div class="sep" style="margin-top:8px;"></div>
+      <p style="font-size:10px;color:#1a3a6a;margin-bottom:5px;">Connect with me:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <a href="https://www.linkedin.com/in/usama-sharif-9b903b342" target="_blank" class="proj-link">LinkedIn</a>
+        <a href="https://github.com/usama6513" target="_blank" class="proj-link">GitHub</a>
+        <a href="https://www.instagram.com/aryan_anjaan65" target="_blank" class="proj-link">Instagram</a>
+        <a href="https://www.tiktok.com/@aryan36951" target="_blank" class="proj-link">TikTok</a>
+      </div>
+    </div>
+    <div class="page-num">11</div><div class="curl"></div>
+  </div>
+  <div class="page-edges"></div>
+</div>
+
+<!-- ===== P8: CONTACT + BACK COVER ===== -->
+<div class="page z-front" id="p8" style="--pi:8">
+  <div class="face face-front">
+    <div class="content">
+      <div class="section-tag">Reach Out</div>
+      <h2>Contact & Connect</h2>
+      <div class="sep"></div>
+      <p style="margin-bottom:10px;">Have a project in mind? Let's build something extraordinary together. Whether you need an AI agent, a mathematical model, or a web app — I'm here to bring your vision to life.</p>
+      <div class="contact-grid">
+        <a href="https://www.linkedin.com/in/usama-sharif-9b903b342" target="_blank" class="contact-item"><span class="c-icon">in</span><div><div class="c-name">LinkedIn</div><div class="c-handle">Usama Sharif</div></div></a>
+        <a href="https://github.com/usama6513" target="_blank" class="contact-item"><span class="c-icon">GH</span><div><div class="c-name">GitHub</div><div class="c-handle">usama6513</div></div></a>
+        <a href="https://www.instagram.com/aryan_anjaan65" target="_blank" class="contact-item"><span class="c-icon">IG</span><div><div class="c-name">Instagram</div><div class="c-handle">@aryan_anjaan65</div></div></a>
+        <a href="https://www.tiktok.com/@aryan36951" target="_blank" class="contact-item"><span class="c-icon">TT</span><div><div class="c-name">TikTok</div><div class="c-handle">@aryan36951</div></div></a>
+        <a href="https://www.facebook.com/share/1Bo3ntgJ8v/" target="_blank" class="contact-item"><span class="c-icon">FB</span><div><div class="c-name">Facebook</div><div class="c-handle">Usama Sharif</div></div></a>
+      </div>
+      <div class="sep" style="margin-top:12px;"></div>
+      <p class="handwritten" style="text-align:center;">Ready to Collaborate? Let's create something that makes a difference.</p>
+    </div>
+    <div class="page-num">12</div><div class="curl"></div>
+  </div>
+  <div class="face back-face">
+    <div class="cover-border"></div><div class="cover-border-inner"></div>
+    <div class="corner tl"><svg viewBox="0 0 30 30"><path d="M2,28 L2,8 Q2,2 8,2 L28,2"/></svg></div>
+    <div class="corner tr"><svg viewBox="0 0 30 30"><path d="M2,28 L2,8 Q2,2 8,2 L28,2"/></svg></div>
+    <div class="corner bl"><svg viewBox="0 0 30 30"><path d="M2,28 L2,8 Q2,2 8,2 L28,2"/></svg></div>
+    <div class="corner br"><svg viewBox="0 0 30 30"><path d="M2,28 L2,8 Q2,2 8,2 L28,2"/></svg></div>
+    <div class="cover-ornament-line"></div>
+    <div class="back-quote">"From Numbers to Neural Networks — Building the Future, One Algorithm at a Time"</div>
+    <div class="cover-ornament-line"></div>
+    <br>
+    <div class="back-author">Usama Sharif</div>
+    <div class="back-sub">AI AGENTS &bull; MATHEMATICS &bull; PYTHON</div>
+    <div class="back-copy">&copy; 2026 &mdash; Crafted with Intelligence</div>
+  </div>
+  <div class="page-edges"></div>
+</div>
+
+</div>
+</div>
+
+<!-- NAV -->
+<button class="nav-btn-fixed prev" id="prevBtn" onclick="prev()" disabled>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+</button>
+<button class="nav-btn-fixed next" id="nextBtn" onclick="next()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+</button>
+<div class="dots-bar">
+  <div class="dots" id="dots"></div>
+  <span class="page-counter" id="counter">Cover</span>
+</div>
+
+<script>
+const TOTAL=8; let cur=1;
+const labels=['Cover','1/9','2/9','3/9','4/9','5/9','6/9','7/9','8/9'];
+
+function render(){
+  document.getElementById('prevBtn').disabled=cur<=1;
+  document.getElementById('nextBtn').disabled=cur>=TOTAL;
+  document.getElementById('counter').textContent=labels[cur-1]||'';
+  const d=document.getElementById('dots'); d.innerHTML='';
+  for(let i=1;i<=TOTAL;i++){const dot=document.createElement('div');dot.className='dot'+(i===cur?' active':'');dot.onclick=()=>goTo(i);d.appendChild(dot);}
+  for(let i=1;i<=TOTAL;i++){
+    const el=document.getElementById('p'+i);
+    var fronts=el.querySelectorAll('.face-front,.cover-face');
+    var backs=el.querySelectorAll('.face-back,.back-face');
+    if(i<cur){
+      el.classList.add('flipped');
+      fronts.forEach(function(f){f.style.visibility='hidden';});
+      backs.forEach(function(b){b.style.visibility='visible';});
+    }else if(i===cur){
+      el.classList.remove('flipped');
+      fronts.forEach(function(f){f.style.visibility='visible';});
+      backs.forEach(function(b){b.style.visibility='hidden';});
+    }else{
+      el.classList.remove('flipped');
+      fronts.forEach(function(f){f.style.visibility='hidden';});
+      backs.forEach(function(b){b.style.visibility='hidden';});
+    }
+  }
+}
+function next(){
+  if(cur<TOTAL){
+    var curEl=document.getElementById('p'+cur);
+    var nxEl=document.getElementById('p'+(cur+1));
+    curEl.querySelectorAll('.face-front,.cover-face,.face-back,.back-face').forEach(function(f){f.style.visibility='visible';});
+    nxEl.querySelectorAll('.face-front,.cover-face,.face-back,.back-face').forEach(function(f){f.style.visibility='visible';});
+    curEl.classList.add('flipped');
+    cur++;
+    setTimeout(render,1050);
+  }
+}
+function prev(){
+  if(cur>1){
+    cur--;
+    var el=document.getElementById('p'+cur);
+    el.classList.remove('flipped');
+    el.querySelectorAll('.face-front,.cover-face,.face-back,.back-face').forEach(function(f){f.style.visibility='visible';});
+    document.getElementById('p'+(cur+1)).querySelectorAll('.face-front,.cover-face,.face-back,.back-face').forEach(function(f){f.style.visibility='visible';});
+    setTimeout(render,1050);
+  }
+}
+function goTo(n){
+  if(n===cur)return;
+  var allPages=[];
+  if(n>cur){for(var i=cur;i<=n;i++)allPages.push(i);}
+  else{for(var i=n;i<=cur;i++)allPages.push(i);}
+  allPages.forEach(function(idx){
+    document.getElementById('p'+idx).querySelectorAll('.face-front,.cover-face,.face-back,.back-face').forEach(function(f){f.style.visibility='visible';});
+  });
+  if(n>cur){for(var i=cur;i<n;i++)document.getElementById('p'+i).classList.add('flipped');}
+  else{for(var i=cur-1;i>=n;i--)document.getElementById('p'+(i+1)).classList.remove('flipped');}
+  cur=n;
+  setTimeout(render,1050);
+}
+
+// No page click - only arrow buttons navigate
+
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}if(e.key==='ArrowLeft'){e.preventDefault();prev();}});
+render();
+
+// Direct click handlers on ALL links — bypasses 3D transform click issues
+document.querySelectorAll('a').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    var url=a.getAttribute('href');
+    if(url) window.open(url,'_blank');
+  });
+});
+</script>
+</body>
+</html>
